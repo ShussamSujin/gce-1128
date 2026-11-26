@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GCE 1128 · 구글 공인 교육자 레벨 1·2 한 번에 따기</title>
+<meta name="description" content="2026. 11. 28. AI·융합교육 교사연구회 워크숍 — 구글 공인 교육자(GCE) 레벨 1·2 현장 응시 안내와 합격 자랑판">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='34' r='24' fill='%23f6d38a' stroke='%234a2e1f' stroke-width='4'/%3E%3Ccircle cx='24' cy='30' r='4' fill='%234a2e1f'/%3E%3Ccircle cx='40' cy='30' r='4' fill='%234a2e1f'/%3E%3C/svg%3E">
+<style>
+:root{
+  --paper:#f4ecd8; --paper2:#eadfc4; --ink:#4a2e1f; --ink2:#7a5a44; --line:#c9b893;
+  --card:#fffaf0; --lemon:#f6d38a; --mint:#bfe3cf; --peach:#f7c6a8; --sky:#bcd8ef; --lilac:#d8c8ec;
+  --ok:#2f7a4f; --bad:#b4432f;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; font-family:"Gowun Dodum",system-ui,sans-serif; color:var(--ink); line-height:1.7;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, #fff8e6 0%, transparent 60%),
+    repeating-linear-gradient(0deg, rgba(74,46,31,.025) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper2) 100%);
+}
+h1,h2,h3,.hand{font-family:"Gaegu","Gowun Dodum",cursive; letter-spacing:-.01em}
+h1{font-size:clamp(3rem,9vw,6rem); line-height:1; margin:0; font-weight:700; color:var(--ink);
+   text-shadow:2px 3px 0 rgba(74,46,31,.08)}
+h2{font-size:clamp(1.9rem,4vw,2.6rem); margin:0 0 .4rem; font-weight:700}
+h3{font-size:1.45rem; margin:0 0 .3rem; font-weight:700}
+a{color:var(--ink)}
+.wrap{max-width:1040px; margin:0 auto; padding:0 20px}
+.sr{position:absolute;left:-9999px}
+
+/* hero */
+.hero{padding:56px 0 24px; text-align:center}
+.hero .mascot{width:min(230px,55vw); margin:0 auto 6px; display:block}
+.hero .kicker{font-size:1.05rem; color:var(--ink2); margin:0 0 8px}
+.hero .sub{font-family:"Gaegu",cursive; font-size:clamp(1.5rem,3.5vw,2.2rem); margin:6px 0 2px; font-weight:700}
+.hero .tag{font-size:1rem; color:var(--ink2); margin:0}
+.btns{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:22px}
+.btn{display:inline-flex; align-items:center; gap:8px; padding:12px 20px; border-radius:999px; border:2.5px solid var(--ink);
+  background:var(--card); font:inherit; font-size:1.05rem; color:var(--ink); text-decoration:none; cursor:pointer;
+  box-shadow:3px 4px 0 var(--ink); transition:transform .08s, box-shadow .08s}
+.btn:hover{transform:translate(1px,1px); box-shadow:2px 3px 0 var(--ink)}
+.btn:active{transform:translate(3px,4px); box-shadow:0 0 0 var(--ink)}
+.btn.primary{background:var(--lemon)}
+.btn.mint{background:var(--mint)}
+.btn.small{padding:8px 14px; font-size:.95rem; box-shadow:2px 3px 0 var(--ink)}
+
+/* nav */
+.nav{position:sticky; top:0; z-index:9; backdrop-filter:blur(6px); background:rgba(244,236,216,.96); border-bottom:2px dashed var(--line)}
+.nav .wrap{display:flex; gap:6px; overflow-x:auto; padding:10px 20px; scrollbar-width:none}
+.nav a{white-space:nowrap; text-decoration:none; padding:6px 14px; border-radius:999px; border:2px solid transparent; font-family:"Gaegu",cursive; font-size:1.15rem; font-weight:700}
+.nav a:hover{border-color:var(--ink); background:var(--card)}
+
+section{padding:48px 0 8px}
+.lead{color:var(--ink2); margin:0 0 20px; font-size:1.05rem}
+
+/* cards */
+.card{background:var(--card); border:2.5px solid var(--ink); border-radius:18px; padding:20px 22px; box-shadow:4px 5px 0 rgba(74,46,31,.9); position:relative}
+.card.tilt-l{transform:rotate(-.6deg)} .card.tilt-r{transform:rotate(.5deg)}
+.grid{display:grid; gap:18px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.tape{position:absolute; top:-12px; left:50%; width:90px; height:24px; transform:translateX(-50%) rotate(-2deg);
+  background:rgba(246,211,138,.75); border:1px solid rgba(74,46,31,.15)}
+.chip{display:inline-block; font-family:"Gaegu",cursive; font-weight:700; font-size:1.05rem; padding:2px 12px; border-radius:999px; border:2px solid var(--ink); background:var(--sky); margin-bottom:8px}
+.chip.l2{background:var(--lilac)} .chip.prep{background:var(--mint)} .chip.exam{background:var(--peach)}
+
+/* schedule */
+.sched{list-style:none; padding:0; margin:0; display:grid; gap:14px}
+.sched li{display:grid; grid-template-columns:120px 1fr; gap:14px; align-items:start}
+.sched .t{font-family:"Gaegu",cursive; font-size:1.5rem; font-weight:700; padding-top:12px}
+.sched .card{padding:14px 18px}
+.sched p{margin:2px 0 0; color:var(--ink2)}
+@media (max-width:560px){.sched li{grid-template-columns:1fr} .sched .t{padding:0}}
+
+/* links */
+.linkcard{display:flex; flex-direction:column; gap:6px; text-decoration:none; min-height:150px}
+.linkcard:hover{background:#fff}
+.linkcard .ico{font-size:2rem; line-height:1}
+.linkcard .url{font-size:.9rem; color:var(--ink2); word-break:break-all}
+
+/* checklist */
+.check{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+.check label{display:flex; gap:12px; align-items:flex-start; cursor:pointer; padding:10px 12px; border-radius:12px; border:2px dashed var(--line); background:rgba(255,250,240,.7)}
+.check input{width:22px; height:22px; margin-top:3px; accent-color:var(--ok); flex:none}
+.check label:has(input:checked){background:var(--mint); border-style:solid; border-color:var(--ok)}
+.check label:has(input:checked) span{text-decoration:line-through; opacity:.75}
+.progress{height:14px; border:2px solid var(--ink); border-radius:999px; background:var(--card); overflow:hidden; margin:14px 0 6px}
+.progress i{display:block; height:100%; width:0; background:var(--ok); transition:width .3s}
+
+/* timer */
+.timer{text-align:center}
+.timer .disp{font-family:"Gaegu",cursive; font-size:clamp(4rem,14vw,8rem); line-height:1; font-weight:700; margin:6px 0 14px; font-variant-numeric:tabular-nums}
+.timer .disp.warn{color:var(--bad)}
+.timer .row{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:6px 0}
+.timer .state{color:var(--ink2); min-height:1.6em}
+.timer input[type=number]{width:70px; font:inherit; font-size:1rem; padding:6px 8px; border:2px solid var(--ink); border-radius:10px; background:var(--card); text-align:center}
+
+/* board */
+.board-top{display:flex; gap:14px; flex-wrap:wrap; align-items:stretch; margin-bottom:18px}
+.stat{flex:1; min-width:140px; text-align:center; padding:12px}
+.stat b{display:block; font-family:"Gaegu",cursive; font-size:3rem; line-height:1}
+.stat span{color:var(--ink2)}
+form.post{display:grid; gap:12px; grid-template-columns:1fr 1fr}
+form.post .full{grid-column:1/-1}
+form.post label{display:grid; gap:4px; font-size:.95rem; color:var(--ink2)}
+form.post input[type=text],form.post input[type=url]{font:inherit; font-size:1rem; padding:10px 12px; border:2px solid var(--ink); border-radius:12px; background:#fff}
+.levels{display:flex; gap:10px}
+.levels label{flex:1; display:flex; align-items:center; justify-content:center; gap:8px; padding:10px; border:2px solid var(--ink); border-radius:12px; background:var(--card); cursor:pointer; font-family:"Gaegu",cursive; font-size:1.3rem; font-weight:700; color:var(--ink)}
+.levels input{accent-color:var(--ink)}
+.levels label:has(input:checked){background:var(--lemon); box-shadow:inset 0 0 0 2px var(--ink)}
+.levels label.l2:has(input:checked){background:var(--lilac)}
+.msg{min-height:1.6em; font-size:.95rem}
+.msg.ok{color:var(--ok)} .msg.bad{color:var(--bad)}
+.posts{display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); margin-top:20px}
+.post-card{padding:14px 16px}
+.post-card .who{font-family:"Gaegu",cursive; font-size:1.45rem; font-weight:700; line-height:1.2}
+.post-card .sch{color:var(--ink2); font-size:.95rem}
+.post-card .note{margin:6px 0 0; font-size:.95rem}
+.post-card .lnk{font-size:.9rem}
+.post-card .badge{position:absolute; top:-14px; right:12px; font-family:"Gaegu",cursive; font-weight:700; font-size:1.1rem; padding:2px 12px; border-radius:999px; border:2px solid var(--ink); background:var(--sky)}
+.post-card .badge.l2{background:var(--lilac)}
+.empty{color:var(--ink2); text-align:center; padding:24px; border:2px dashed var(--line); border-radius:16px}
+@media (max-width:560px){form.post{grid-template-columns:1fr}}
+
+footer{margin-top:60px; padding:28px 0 40px; border-top:2px dashed var(--line); text-align:center; color:var(--ink2); font-size:.95rem}
+footer b{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <!-- 마스코트: 배지를 단 고슴도치 '도치' -->
+    <svg class="mascot" viewBox="0 0 260 230" role="img" aria-label="배지를 단 고슴도치 마스코트">
+      <g fill="none" stroke="#4a2e1f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <!-- 가시 -->
+        <path fill="#8b5e3c" d="M70 120 C40 90, 55 50, 85 48 C95 25, 130 20, 150 40 C180 25, 215 45, 212 80 C240 95, 232 135, 205 142 L195 150 L80 150 Z"/>
+        <path d="M78 112 L58 96 M86 82 L62 70 M104 60 L90 36 M132 50 L128 26 M160 52 L172 28 M186 66 L206 52 M202 92 L228 86 M206 118 L230 122"/>
+        <!-- 얼굴 -->
+        <path fill="#f6d38a" d="M80 150 C70 118, 95 92, 135 92 C170 92, 200 110, 205 142 C208 165, 190 182, 160 184 L100 184 C84 182, 74 168, 80 150 Z"/>
+        <!-- 코 -->
+        <path fill="#4a2e1f" d="M76 150 C66 148, 60 142, 62 136 C70 132, 80 136, 82 142 Z"/>
+        <!-- 눈 -->
+        <circle cx="112" cy="138" r="5" fill="#4a2e1f"/>
+        <circle cx="148" cy="134" r="5" fill="#4a2e1f"/>
+        <!-- 볼 -->
+        <circle cx="104" cy="156" r="6" fill="#f7a9a0" stroke="none"/>
+        <circle cx="158" cy="152" r="6" fill="#f7a9a0" stroke="none"/>
+        <!-- 입 -->
+        <path d="M124 156 Q130 162 136 156"/>
+        <!-- 발 -->
+        <path fill="#f6d38a" d="M98 184 L96 200 M118 186 L118 202 M150 186 L152 202 M172 182 L176 198"/>
+        <!-- 배지 -->
+        <circle cx="206" cy="166" r="22" fill="#bfe3cf"/>
+        <path fill="#bfe3cf" d="M194 184 L190 212 L206 202 L222 212 L218 184"/>
+        <circle cx="206" cy="166" r="22" fill="#bfe3cf"/>
+        <path d="M196 166 L203 173 L217 158" stroke-width="6"/>
+      </g>
+    </svg>
+    <p class="kicker">2026. 11. 28. · AI·융합교육 교사연구회 역량강화 워크숍</p>
+    <h1>GCE 1128</h1>
+    <p class="sub">구글 공인 교육자 레벨 1·2, 오늘 한 번에 따요!!</p>
+    <p class="tag">13:00–18:00 · 노트북 꼭 챙겨 오세요</p>
+    <div class="btns">
+      <a class="btn primary" id="slidesBtn" href="#" target="_blank" rel="noopener">📑 오늘의 슬라이드</a>
+      <a class="btn" href="https://educertifications.google/" target="_blank" rel="noopener">📝 시험 등록 사이트</a>
+      <a class="btn mint" href="#board">🏅 합격 자랑판</a>
+    </div>
+  </div>
+</header>
+
+<nav class="nav" aria-label="섹션 이동">
+  <div class="wrap">
+    <a href="#schedule">오늘의 순서</a>
+    <a href="#links">바로 가기</a>
+    <a href="#check">응시 전 점검</a>
+    <a href="#timer">타이머</a>
+    <a href="#board">합격 자랑판</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="schedule">
+  <h2>오늘의 순서</h2>
+  <p class="lead">준비 → 응시 → 준비 → 응시. 레벨 1을 끝내고 레벨 2까지 가요.</p>
+  <ol class="sched">
+    <li><div class="t">13:00–13:45</div>
+      <div class="card tilt-l"><span class="chip prep">PART 1 · 준비</span><h3>GCE 알아보고 레벨 1 준비</h3><p>시험 구조 · 등록 · 레벨 1 핵심 기능 · 응시 환경 세팅</p></div></li>
+    <li><div class="t">13:45–15:15</div>
+      <div class="card tilt-r"><span class="chip exam">PART 2 · 응시</span><h3>레벨 1 현장 응시</h3><p>퀴즈 25문제 + 실습 랩 3개 · 막히면 손 들어 주세요, 바로 갈게요</p></div></li>
+    <li><div class="t">15:25–15:55</div>
+      <div class="card tilt-l"><span class="chip prep">PART 3 · 준비</span><h3>레벨 2 핵심 기능 훑어보기</h3><p>캘린더·Meet · 클래스룸 · 문서 · 슬라이드 · 시트 · 사이트의 한 걸음 더</p></div></li>
+    <li><div class="t">15:55–18:00</div>
+      <div class="card tilt-r"><span class="chip exam">PART 4 · 응시</span><h3>레벨 2 현장 응시와 마무리</h3><p>합격 확인 · 자랑판 등록 · 못 끝낸 분은 저녁에 이어서 (시작 후 9시간 안에만!!)</p></div></li>
+  </ol>
+</section>
+
+<section id="links">
+  <h2>바로 가기</h2>
+  <p class="lead">오늘 쓰는 주소는 여기 다 모아 뒀어요.</p>
+  <div class="grid g3">
+    <a class="card linkcard" href="https://educertifications.google/" target="_blank" rel="noopener"><span class="ico">📝</span><h3>시험 등록 · 응시</h3><span>Register for an Exam → Level 1 / Level 2</span><span class="url">educertifications.google</span></a>
+    <a class="card linkcard" id="slidesCard" href="#" target="_blank" rel="noopener"><span class="ico">📑</span><h3>오늘의 슬라이드</h3><span>시험 구조 · 핵심 기능 · 응시 절차 · 부록</span><span class="url">docs.google.com/presentation</span></a>
+    <a class="card linkcard" href="https://edu.google.com/intl/ALL_kr/for-educators/certification-programs/product-expertise/" target="_blank" rel="noopener"><span class="ico">📘</span><h3>공식 안내</h3><span>Google for Education 인증 프로그램 소개와 시험 가이드</span><span class="url">edu.google.com</span></a>
+    <a class="card linkcard" href="https://support.google.com/edu/classroom/" target="_blank" rel="noopener"><span class="ico">🔎</span><h3>고객센터 검색</h3><span>랩에서 막히면 기능 이름으로 검색해요 (시험 규정 안에서)</span><span class="url">support.google.com</span></a>
+    <a class="card linkcard" href="#board"><span class="ico">🏅</span><h3>합격 자랑판</h3><span>합격하면 바로 올려요. 인증서 링크도 함께!!</span><span class="url">이 페이지 아래</span></a>
+    <a class="card linkcard" id="surveyCard" href="#" target="_blank" rel="noopener"><span class="ico">💬</span><h3>만족도 조사</h3><span>마치기 전에 1분만 부탁해요</span><span class="url">forms.gle</span></a>
+  </div>
+</section>
+
+<section id="check">
+  <h2>응시 전 점검</h2>
+  <p class="lead">[Start Lab]을 누르기 전에 하나씩 체크해요. 체크 상태는 이 브라우저에 남아요.</p>
+  <div class="card">
+    <ul class="check" id="checklist">
+      <li><label><input type="checkbox" data-k="c1"><span>Chrome이 최신 버전이고, 네트워크가 안정적인지 확인했어요</span></label></li>
+      <li><label><input type="checkbox" data-k="c2"><span>시험 사이트에 로그인할 구글 계정을 정했어요 (학교 계정 또는 개인 계정)</span></label></li>
+      <li><label><input type="checkbox" data-k="c3"><span>랩은 시크릿 창에서 열고, 시험용 계정(User Email · Password)은 복사 버튼으로 붙여 넣어요</span></label></li>
+      <li><label><input type="checkbox" data-k="c4"><span>확장 프로그램과 팝업 차단을 껐어요</span></label></li>
+      <li><label><input type="checkbox" data-k="c5"><span>랩당 1시간, 전체 9시간 규칙을 알아요. 시작한 랩은 멈출 수 없어요</span></label></li>
+      <li><label><input type="checkbox" data-k="c6"><span>[End Lab]은 모든 과제를 확인한 뒤에만 눌러요 (100/100 확인!!)</span></label></li>
+    </ul>
+    <div class="progress" aria-hidden="true"><i id="checkBar"></i></div>
+    <div id="checkMsg" class="msg"></div>
+  </div>
+</section>
+
+<section id="timer">
+  <h2>실습 타이머</h2>
+  <p class="lead">강사 화면에 크게 띄워 두고 써요. 끝나면 소리가 나요.</p>
+  <div class="card timer">
+    <div class="disp" id="disp">05:00</div>
+    <div class="row">
+      <button class="btn small" data-min="3">3분</button>
+      <button class="btn small" data-min="5">5분</button>
+      <button class="btn small" data-min="10">10분</button>
+      <button class="btn small" data-min="15">15분</button>
+      <button class="btn small" data-min="60">60분</button>
+      <label>직접 <input type="number" id="customMin" min="1" max="180" value="5"> 분 <button class="btn small" id="setCustom">설정</button></label>
+    </div>
+    <div class="row">
+      <button class="btn primary" id="startBtn">▶ 시작</button>
+      <button class="btn" id="pauseBtn">⏸ 일시정지</button>
+      <button class="btn" id="plusBtn">+1분</button>
+      <button class="btn" id="resetBtn">↺ 처음으로</button>
+    </div>
+    <div class="state" id="tstate">준비됐어요</div>
+  </div>
+</section>
+
+<section id="board">
+  <h2>합격 자랑판</h2>
+  <p class="lead">합격 화면이 뜨면 바로 올려요. 같은 이름·학교·레벨로 다시 올리면 새 줄 대신 고쳐져요.</p>
+
+  <div class="board-top">
+    <div class="card stat"><b id="cntL1">0</b><span>레벨 1 합격</span></div>
+    <div class="card stat"><b id="cntL2">0</b><span>레벨 2 합격</span></div>
+    <div class="card stat"><b id="cntBoth">0</b><span>둘 다 딴 선생님</span></div>
+  </div>
+
+  <div class="card">
+    <span class="tape" aria-hidden="true"></span>
+    <form class="post" id="postForm" autocomplete="on">
+      <label>이름 <input type="text" name="name" maxlength="20" required placeholder="홍길동"></label>
+      <label>학교 <input type="text" name="school" maxlength="30" required placeholder="○○고등학교"></label>
+      <div class="full">
+        <div class="levels">
+          <label><input type="radio" name="level" value="Level 1" required> 레벨 1</label>
+          <label class="l2"><input type="radio" name="level" value="Level 2"> 레벨 2</label>
+        </div>
+      </div>
+      <label class="full">인증서·배지 링크 (선택) <input type="url" name="link" maxlength="300" placeholder="https://… (합격 메일의 인증서 링크)"></label>
+      <label class="full">한마디 (선택, 60자) <input type="text" name="note" maxlength="60" placeholder="예: 랩 3개 50분 컷!!"></label>
+      <div class="full" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn primary" type="submit" id="submitBtn">🏅 자랑하기</button>
+        <button class="btn small" type="button" id="reloadBtn">새로고침</button>
+        <span class="msg" id="postMsg"></span>
+      </div>
+    </form>
+  </div>
+
+  <div class="posts" id="posts"></div>
+  <div class="empty" id="boardEmpty" hidden>아직 첫 합격자가 없어요. 첫 번째 주인공이 되어 주세요!!</div>
+  <div class="empty" id="boardOff" hidden>자랑판 저장소를 연결하는 중이에요. 잠시 뒤에 다시 열어 주세요.</div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>GCE 1128</b> · 용강중학교 이수진</div>
+    <div>© 2026 Google Certified Trainer &amp; Innovator Sujin Lee</div>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script>
+(function(){
+  const C = window.GCE_CONFIG || {};
+  const $ = s => document.querySelector(s);
+
+  // 링크 채우기
+  if (C.SLIDES_URL) { $('#slidesBtn').href = C.SLIDES_URL; $('#slidesCard').href = C.SLIDES_URL; }
+  if (C.SURVEY_URL) { $('#surveyCard').href = C.SURVEY_URL; }
+
+  // ---- 체크리스트 (브라우저에 저장) ----
+  const boxes = [...document.querySelectorAll('#checklist input')];
+  const store = (k, v) => { try { localStorage.setItem('gce1128_' + k, v); } catch (e) {} };
+  const load = k => { try { return localStorage.getItem('gce1128_' + k); } catch (e) { return null; } };
+  const msgs = ['하나씩 시작해 볼까요?', '좋아요, 계속!!', '절반 가까이 왔어요', '거의 다 됐어요', '한 개 남았어요', '준비 끝!! [Start Lab] 눌러도 돼요'];
+  function renderCheck(){
+    const n = boxes.filter(b => b.checked).length;
+    $('#checkBar').style.width = (n / boxes.length * 100) + '%';
+    $('#checkMsg').textContent = n === boxes.length ? msgs[5] : (n === 0 ? msgs[0] : msgs[Math.min(4, Math.ceil(n / boxes.length * 4))]);
+    $('#checkMsg').className = 'msg' + (n === boxes.length ? ' ok' : '');
+  }
+  boxes.forEach(b => { b.checked = load(b.dataset.k) === '1'; b.addEventListener('change', () => { store(b.dataset.k, b.checked ? '1' : '0'); renderCheck(); }); });
+  renderCheck();
+
+  // ---- 타이머 ----
+  let total = 300, left = 300, tick = null;
+  const disp = $('#disp'), tstate = $('#tstate');
+  const fmt = s => String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+  function paint(){ disp.textContent = fmt(left); disp.classList.toggle('warn', left <= 30 && left > 0); document.title = (tick ? '⏱ ' + fmt(left) + ' · ' : '') + 'GCE 1128'; }
+  function beep(){
+    try { const ac = new (window.AudioContext || window.webkitAudioContext)();
+      [0, .25, .5].forEach(t => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = 880; o.connect(g); g.connect(ac.destination);
+        g.gain.setValueAtTime(.0001, ac.currentTime + t); g.gain.exponentialRampToValueAtTime(.3, ac.currentTime + t + .02); g.gain.exponentialRampToValueAtTime(.0001, ac.currentTime + t + .2);
+        o.start(ac.currentTime + t); o.stop(ac.currentTime + t + .22); }); } catch (e) {}
+  }
+  function stop(){ clearInterval(tick); tick = null; }
+  function start(){ if (tick || left <= 0) return; tstate.textContent = '진행 중'; tick = setInterval(() => { left--; paint(); if (left <= 0) { stop(); tstate.textContent = '시간 끝!! 수고했어요'; beep(); } }, 1000); }
+  function setMin(m){ stop(); total = left = Math.max(1, Math.min(180, m)) * 60; tstate.textContent = m + '분으로 맞췄어요'; paint(); }
+  document.querySelectorAll('[data-min]').forEach(b => b.addEventListener('click', () => setMin(+b.dataset.min)));
+  $('#setCustom').addEventListener('click', () => setMin(+$('#customMin').value || 5));
+  $('#startBtn').addEventListener('click', start);
+  $('#pauseBtn').addEventListener('click', () => { if (tick) { stop(); tstate.textContent = '일시정지'; } });
+  $('#plusBtn').addEventListener('click', () => { left += 60; total += 60; paint(); });
+  $('#resetBtn').addEventListener('click', () => { stop(); left = total; tstate.textContent = '처음으로 돌렸어요'; paint(); });
+  paint();
+
+  // ---- 합격 자랑판 ----
+  const api = (C.API_URL || '').trim();
+  const posts = $('#posts'), postMsg = $('#postMsg'), form = $('#postForm');
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function render(items){
+    posts.innerHTML = '';
+    const l1 = items.filter(i => i.level === 'Level 1'), l2 = items.filter(i => i.level === 'Level 2');
+    const key = i => i.name + '|' + i.school;
+    const both = new Set(l1.map(key)).size && l2.filter(i => l1.some(j => key(j) === key(i))).length;
+    $('#cntL1').textContent = l1.length; $('#cntL2').textContent = l2.length; $('#cntBoth').textContent = both || 0;
+    $('#boardEmpty').hidden = items.length > 0;
+    items.forEach(i => {
+      const d = document.createElement('div'); d.className = 'card post-card';
+      const safeLink = /^https?:\/\//.test(i.link || '') ? i.link : '';
+      d.innerHTML = `<span class="badge ${i.level === 'Level 2' ? 'l2' : ''}">${esc(i.level)}</span>
+        <div class="who">${esc(i.name)} 선생님</div><div class="sch">${esc(i.school)}</div>
+        ${i.note ? `<p class="note">“${esc(i.note)}”</p>` : ''}
+        ${safeLink ? `<a class="lnk" href="${esc(safeLink)}" target="_blank" rel="noopener">인증서 보기 ↗</a>` : ''}`;
+      posts.appendChild(d);
+    });
+  }
+  async function loadBoard(){
+    if (!api) { $('#boardOff').hidden = false; form.querySelectorAll('input,button').forEach(e => e.disabled = true); return; }
+    try {
+      const r = await fetch(api + '?action=list&t=' + Date.now(), { cache: 'no-store' });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || '불러오기 실패');
+      render(j.items || []);
+    } catch (e) { postMsg.className = 'msg bad'; postMsg.textContent = '자랑판을 불러오지 못했어요. 새로고침을 눌러 주세요.'; }
+  }
+  form.addEventListener('submit', async ev => {
+    ev.preventDefault();
+    const fd = new FormData(form);
+    const data = Object.fromEntries(fd.entries());
+    $('#submitBtn').disabled = true; postMsg.className = 'msg'; postMsg.textContent = '올리는 중…';
+    try {
+      const r = await fetch(api, { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'text/plain;charset=utf-8' } });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || '등록 실패');
+      postMsg.className = 'msg ok'; postMsg.textContent = j.updated ? '기존 기록을 고쳤어요!!' : '축하해요!! 자랑판에 올렸어요 🎉';
+      form.querySelector('[name=note]').value = ''; form.querySelector('[name=link]').value = '';
+      await loadBoard();
+    } catch (e) { postMsg.className = 'msg bad'; postMsg.textContent = '올리지 못했어요: ' + e.message; }
+    finally { $('#submitBtn').disabled = false; }
+  });
+  $('#reloadBtn').addEventListener('click', loadBoard);
+  loadBoard();
+  if (api) setInterval(loadBoard, 30000);
+})();
+</script>
+</body>
+</html>
