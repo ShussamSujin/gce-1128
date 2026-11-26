@@ -1,12 +1,13 @@
 /**
  * GCE 1128 합격 자랑판 저장소
- * - 구글 시트에 연결된(컨테이너 바인딩) Apps Script로 쓰는 코드예요.
- * - 시트 첫 번째 탭의 1행: 시각 | 이름 | 학교 | 레벨 | 링크 | 한마디
+ * - 독립형 Apps Script 프로젝트에서 아래 시트 ID의 시트에 기록해요.
+ * - "자랑판" 탭의 1행: 시각 | 이름 | 학교 | 레벨 | 링크 | 한마디
  */
+const SPREADSHEET_ID = "1tPBbnue-O7vx1saG8uuc_Rmzgejy5hormROPDsb98Bw";
 const SHEET_NAME = "자랑판";
 
 function getSheet_() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   let sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) {
     sh = ss.insertSheet(SHEET_NAME);
