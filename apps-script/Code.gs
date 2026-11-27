@@ -1,17 +1,25 @@
 /**
- * GCE 1128 합격 자랑판 저장소
- * - 독립형 Apps Script 프로젝트에서 아래 시트 ID의 시트에 기록해요.
- * - "자랑판" 탭의 1행: 시각 | 이름 | 학교 | 레벨 | 링크 | 한마디
+ * GCE 1128 연수 사이트 저장소 (Apps Script 웹 앱)
+ * 시트 탭: 자랑판 | 실습계정 | 실습링크
+ *
+ *  GET  ?action=list            → 합격 자랑판 목록
+ *  GET  ?action=links           → 실습 링크 목록 (탭·제목·주소·메모·실습)
+ *  GET  ?action=account&name=…  → 이름이 정확히 일치하는 실습 계정
+ *  POST { name, school, level, link, note } → 자랑판 등록
  */
 const SPREADSHEET_ID = "1tPBbnue-O7vx1saG8uuc_Rmzgejy5hormROPDsb98Bw";
-const SHEET_NAME = "자랑판";
+const SHEET_BOARD = "자랑판";
+const SHEET_ACCOUNTS = "실습계정";
+const SHEET_LINKS = "실습링크";
 
-function getSheet_() {
-  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  let sh = ss.getSheetByName(SHEET_NAME);
+function ss_() { return SpreadsheetApp.openById(SPREADSHEET_ID); }
+
+function sheet_(name, header) {
+  const ss = ss_();
+  let sh = ss.getSheetByName(name);
   if (!sh) {
-    sh = ss.insertSheet(SHEET_NAME);
-    sh.appendRow(["시각", "이름", "학교", "레벨", "링크", "한마디"]);
+    sh = ss.insertSheet(name);
+    sh.appendRow(header);
     sh.setFrozenRows(1);
   }
   return sh;
@@ -22,24 +30,45 @@ function json_(obj) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-// 목록 읽기: GET ?action=list
-function doGet(e) {
-  const sh = getSheet_();
+function rows_(sh, cols) {
   const last = sh.getLastRow();
-  if (last < 2) return json_({ ok: true, items: [] });
-  const rows = sh.getRange(2, 1, last - 1, 6).getValues();
-  const items = rows
-    .filter(r => r[1])
-    .map(r => ({
-      time: r[0] instanceof Date ? r[0].toISOString() : String(r[0]),
-      name: String(r[1]), school: String(r[2]), level: String(r[3]),
-      link: String(r[4]), note: String(r[5]),
-    }))
-    .reverse();
+  if (last < 2) return [];
+  return sh.getRange(2, 1, last - 1, cols).getValues().filter(r => String(r[0] || r[1] || "").trim());
+}
+
+// ---------- GET ----------
+function doGet(e) {
+  const p = (e && e.parameter) || {};
+  const action = String(p.action || "list");
+
+
+  if (action === "links") {
+    const sh = sheet_(SHEET_LINKS, ["탭", "제목", "주소", "메모", "실습"]);
+    const items = rows_(sh, 5).map(r => ({
+      session: String(r[0]), title: String(r[1]), url: String(r[2]), note: String(r[3]), lab: String(r[4]),
+    })).filter(i => i.title && i.url);
+    return json_({ ok: true, items });
+  }
+
+  if (action === "account") {
+    const name = String(p.name || "").replace(/\s+/g, "");
+    if (!name) return json_({ ok: false, error: "이름을 입력해 주세요." });
+    const sh = sheet_(SHEET_ACCOUNTS, ["지역", "학교", "이름", "아이디", "비밀번호", "구분"]);
+    const hits = rows_(sh, 6).filter(r => String(r[2]).replace(/\s+/g, "") === name);
+    if (!hits.length) return json_({ ok: false, error: "명단에 없는 이름이에요. 강사에게 알려 주세요." });
+    const items = hits.map(r => ({ region: String(r[0]), school: String(r[1]), name: String(r[2]), id: String(r[3]), pw: String(r[4]), group: String(r[5]) }));
+    return json_({ ok: true, items });
+  }
+
+  const sh = sheet_(SHEET_BOARD, ["시각", "이름", "학교", "레벨", "링크", "한마디"]);
+  const items = rows_(sh, 6).filter(r => r[1]).map(r => ({
+    time: r[0] instanceof Date ? r[0].toISOString() : String(r[0]),
+    name: String(r[1]), school: String(r[2]), level: String(r[3]), link: String(r[4]), note: String(r[5]),
+  })).reverse();
   return json_({ ok: true, items });
 }
 
-// 등록: POST(본문 JSON) { name, school, level, link, note }
+// ---------- POST: 자랑판 등록 ----------
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents || "{}");
@@ -56,8 +85,7 @@ function doPost(e) {
     const lock = LockService.getScriptLock();
     lock.waitLock(5000);
     try {
-      const sh = getSheet_();
-      // 같은 사람·같은 레벨이 또 올리면 새 줄 대신 기존 줄을 갱신해요.
+      const sh = sheet_(SHEET_BOARD, ["시각", "이름", "학교", "레벨", "링크", "한마디"]);
       const last = sh.getLastRow();
       if (last >= 2) {
         const rows = sh.getRange(2, 1, last - 1, 6).getValues();
@@ -76,4 +104,14 @@ function doPost(e) {
   } catch (err) {
     return json_({ ok: false, error: String(err) });
   }
+}
+
+// ---------- 참고 ----------
+// 실습계정·실습링크 탭의 내용은 시트에서 직접 관리해요(공개 저장소에는 명단을 두지 않아요).
+// 사람이 늘면 "실습계정" 탭 맨 아래 행에 지역 | 학교 | 이름 | 아이디 | 비밀번호 | 구분 순으로 추가하면 돼요.
+function setup() {
+  // 시트 탭과 머리글만 만들어요. 데이터는 시트에 직접 입력해요.
+  sheet_(SHEET_ACCOUNTS, ["지역", "학교", "이름", "아이디", "비밀번호", "구분"]);
+  sheet_(SHEET_LINKS, ["탭", "제목", "주소", "메모", "실습"]);
+  return "tabs ready";
 }
