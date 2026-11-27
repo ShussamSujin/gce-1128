@@ -53,11 +53,22 @@ function doGet(e) {
   if (action === "account") {
     const name = String(p.name || "").replace(/\s+/g, "");
     if (!name) return json_({ ok: false, error: "이름을 입력해 주세요." });
-    const sh = sheet_(SHEET_ACCOUNTS, ["지역", "학교", "이름", "아이디", "비밀번호", "구분"]);
-    const hits = rows_(sh, 6).filter(r => String(r[2]).replace(/\s+/g, "") === name);
+    // 7번째 열 "짝"에 짝꿍 아이디를 적으면 그대로, 비어 있으면 번호 순서대로 둘씩(홀수면 마지막 셋) 묶어요.
+    const sh = sheet_(SHEET_ACCOUNTS, ["지역", "학교", "이름", "아이디", "비밀번호", "구분", "짝"]);
+    const all = rows_(sh, 7).filter(r => String(r[3]).trim());
+    const toObj = r => ({ region: String(r[0]), school: String(r[1]), name: String(r[2]), id: String(r[3]).trim(), pw: String(r[4]), group: String(r[5]) });
+    const partnersOf = (idx) => {
+      const manual = String(all[idx][6] || "").split(/[,\s]+/).filter(Boolean);
+      if (manual.length) return all.filter(r => manual.includes(String(r[3]).trim())).map(toObj);
+      const n = all.length, pairIdx = Math.floor(idx / 2);
+      const lastTrio = (n % 2 === 1) && idx >= n - 3;
+      const mates = lastTrio ? [n - 3, n - 2, n - 1] : [pairIdx * 2, pairIdx * 2 + 1];
+      return mates.filter(i => i !== idx && i < n).map(i => toObj(all[i]));
+    };
+    const hits = [];
+    all.forEach((r, i) => { if (String(r[2]).replace(/\s+/g, "") === name) hits.push(Object.assign(toObj(r), { partners: partnersOf(i).map(x => ({ name: x.name, school: x.school, id: x.id })) })); });
     if (!hits.length) return json_({ ok: false, error: "명단에 없는 이름이에요. 강사에게 알려 주세요." });
-    const items = hits.map(r => ({ region: String(r[0]), school: String(r[1]), name: String(r[2]), id: String(r[3]), pw: String(r[4]), group: String(r[5]) }));
-    return json_({ ok: true, items });
+    return json_({ ok: true, items: hits });
   }
 
   const sh = sheet_(SHEET_BOARD, ["시각", "이름", "학교", "레벨", "링크", "한마디"]);
@@ -108,10 +119,11 @@ function doPost(e) {
 
 // ---------- 참고 ----------
 // 실습계정·실습링크 탭의 내용은 시트에서 직접 관리해요(공개 저장소에는 명단을 두지 않아요).
-// 사람이 늘면 "실습계정" 탭 맨 아래 행에 지역 | 학교 | 이름 | 아이디 | 비밀번호 | 구분 순으로 추가하면 돼요.
+// 사람이 늘면 "실습계정" 탭 맨 아래 행에 지역 | 학교 | 이름 | 아이디 | 비밀번호 | 구분 | 짝 순으로 추가하면 돼요.
+// "짝" 열은 비워 두면 번호 순서대로 둘씩 자동 배정, 아이디를 적으면 그 사람과 짝이에요.
 function setup() {
   // 시트 탭과 머리글만 만들어요. 데이터는 시트에 직접 입력해요.
-  sheet_(SHEET_ACCOUNTS, ["지역", "학교", "이름", "아이디", "비밀번호", "구분"]);
+  sheet_(SHEET_ACCOUNTS, ["지역", "학교", "이름", "아이디", "비밀번호", "구분", "짝"]);
   sheet_(SHEET_LINKS, ["탭", "제목", "주소", "메모", "실습"]);
   return "tabs ready";
 }
